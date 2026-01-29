@@ -1,30 +1,13 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import config
+from routes.admin.upload import router as upload_router
+from routes import router as predict_router
 
 app = FastAPI()
-print(config.API_KEY)
+print("server running ")
 
 @app.get('/')
 def root():
-    return {"body": "wowww"}
+    return {"body": "Welcome to CCS Smart Drive"}
 
-todos = []
-id = 1
-
-class TodoCreate(BaseModel):
-    title: str
-
-@app.get('/todo')
-def get_todos():
-    return {"body": todos}
-
-@app.post('/todo')
-def create_todos(todo: TodoCreate):
-    global id
-    todos.append({
-        'title': todo.title,
-        'id': id
-    })
-    id+=1
-    return {"Created a todo"}
+app.include_router(upload_router)
+app.include_router(predict_router)
