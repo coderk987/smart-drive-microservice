@@ -2,7 +2,7 @@ from fastapi import FastAPI, APIRouter, UploadFile, File, Form, Header
 import config
 import uuid
 from services.cloudinary import upload_cloud
-from services import model
+from services.model import train, predict
 from services import qdrant
 
 router = APIRouter(prefix="/admin")
@@ -16,10 +16,8 @@ def upload_image(
 
     if True:
         image_id = str(uuid.uuid4())
-
-        # upload_cloud(image, event)
-        # ask ml model for embedding
-        # save in vector db embedding
+        image_embed = train()
+        
         cloud_result = upload_cloud(image, image_id, event)
         print(cloud_result)
 
