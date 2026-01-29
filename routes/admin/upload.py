@@ -3,7 +3,7 @@ import config
 import uuid
 from services.cloudinary import upload_cloud
 from services.model import train, predict
-from services import qdrant
+from services.qdrant import upsert_embedding
 
 router = APIRouter(prefix="/admin")
 API_KEY = config.API_KEY
@@ -17,7 +17,7 @@ def upload_image(
     if True:
         image_id = str(uuid.uuid4())
         image_embed = train()
-        
+        upsert_embedding(image_id, image_embed)
         cloud_result = upload_cloud(image, image_id, event)
         print(cloud_result)
 
