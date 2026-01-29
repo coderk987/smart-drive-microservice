@@ -14,7 +14,7 @@ def upload_image(
     event: str = Form(...),
     x_api_key: str = Header(None)):
 
-    if True:
+    if x_api_key==API_KEY:
         image_id = str(uuid.uuid4())
         image_embed = train()
         upsert_embedding(image_id, image_embed)
