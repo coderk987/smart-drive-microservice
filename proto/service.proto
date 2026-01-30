@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service ImageService {
+  rpc UploadImage (ImageRequest) returns (UploadImageResponse);
+  rpc PredictImage (ImageRequest) returns (PredictImageResponse);
+}
+
+message ImageRequest {
+    bytes image = 1;
+    string event = 2;
+}
+
+message UploadImageResponse {
+    string image_event = 1;
+    string image_url = 2;
+    string image_id = 3;
+}
+
+message PredictItem {
+    string image_url = 1;
+    string image_id = 2;
+}
+
+message PredictImageResponse {
+    repeated PredictItem predict_items = 1;
+}
