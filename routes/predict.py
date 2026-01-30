@@ -7,10 +7,19 @@ router = APIRouter()
 
 @router.post("/predict")
 def get_images(event: str = Form(...)):
+
     cloudRes = fetch_cloud(event)
     qdrantRes = fetch_embedding(event)
+    predictRes = predict(qdrantRes)
 
-    predict(qdrantRes)
+    print(predictRes)
 
-    return [cloudRes, qdrantRes]
+    filter_img = []
+    for prediction in predictRes:
+        cur_id = event+'/'+prediction.id
+        for cloud_image in cloudRes:
+            if cloud_image["id"]==cur_id:
+                filter_img.append(cloud_image)
+
+    return [filter_img]
 
