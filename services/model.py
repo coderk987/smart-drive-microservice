@@ -8,6 +8,6 @@ def train():
 
 #print(train())
 
-def predict():
-    # fake prediction
-    return random.choice([True, False])
+def predict(embeds, user_img):
+    #fake filter
+    return [embed for embed in embeds if random.random() < 0.25]
